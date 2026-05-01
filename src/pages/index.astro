@@ -5,6 +5,7 @@ import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
 import companyOneImage from '../assets/bg/bd.jpg';
 import companyTwoImage from '../assets/bg/cn.jpg';
+import journeyImage from '../assets/bg/abbeyroad.jpg';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 ---
 
@@ -37,11 +38,57 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 				font-size: clamp(2rem, 4vw, 3.4rem);
 			}
 			.intro p {
-				max-width: 760px;
-				margin: 0;
+				max-width: 680px;
+				margin: 0.85rem auto 0;
+				text-align: left;
+			}
+			.intro h3 {
+				max-width: 680px;
+				margin: 0 auto 1.6rem;
+				text-align: center;
+				font-size: 2.1rem;
+				white-space: nowrap;
 			}
 			.career {
+				padding-top: 2.25rem;
 				padding-bottom: 5rem;
+			}
+			.journey-break {
+				position: relative;
+				padding: 4rem 0;
+				text-align: center;
+				overflow: hidden;
+				isolation: isolate;
+				width: 100%;
+			}
+			.journey-media {
+				position: absolute;
+				inset: 0;
+				z-index: 0;
+				overflow: hidden;
+			}
+			.journey-media img {
+				width: 120%;
+				height: 100%;
+				object-fit: cover;
+				border-radius: 0;
+				transform: translateX(var(--journey-shift, -8%));
+				transition: transform 80ms linear;
+			}
+			.journey-break::before {
+				content: '';
+				position: absolute;
+				inset: 0;
+				z-index: 1;
+				background: rgba(0, 0, 0, 0.36);
+			}
+			.journey-break p {
+				position: relative;
+				z-index: 2;
+				margin: 0;
+				font-size: clamp(1.05rem, 2vw, 1.4rem);
+				font-weight: 600;
+				color: #fff;
 			}
 			.career-title {
 				margin: 0 0 1.25rem;
@@ -172,9 +219,15 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 				color: #d3dcff;
 			}
 			@media (max-width: 920px) {
+				.intro h3 {
+					white-space: normal;
+				}
+				.journey-break {
+					padding: 2rem 0 2.25rem;
+				}
 				.experience-band {
 					padding: 2.5rem 0;
-					min-height: auto;
+					min-height: 72vh;
 				}
 				.experience-media {
 					transform: none !important;
@@ -202,16 +255,27 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 		<main>
 			<section class="intro section-inner">
 				<p class="intro-kicker">Developer Introduction</p>
-				<h1>문제를 끝까지 해결하는 백엔드 중심 개발자</h1>
+				<h3>게임을 좋아하고, 끝까지 완성해내는 개발자 입니다</h3>
 				<p>
-					서비스 안정성과 운영 효율을 우선으로 설계하고, 기능 개발부터 배포/관측까지 책임지고 실행합니다.
-					코드 품질과 협업 속도를 동시에 높이는 개발 방식을 지향합니다.
+					아주 어렸을적 부터 게임 개발자가 꿈이 었습니다, 펄어비스를 시작으로 약 10년간 다양한 게임 프로젝트를 만들며 경험을 쌓았습니다.
+					특정 기술 하나에만 머물기보다, 프로젝트에 맞는 방법을 빠르게 익혀 실제 결과로 연결하는 것을 중요하게 생각합니다.
 				</p>
+				<p>
+					저는 단순히 기능을 만드는 데서 멈추지 않고, 기획 의도를 이해하고 팀과 함께 더 좋은 방향을 찾는 과정을
+					좋아합니다. 앞으로도 사용자에게 오래 기억되는 게임 경험을 만드는 개발자가 되고자 합니다.
+				</p>
+			</section>
+
+			<section class="journey-break" id="journey-break">
+				<figure class="journey-media">
+					<Image src={journeyImage} alt="경력 소개 배경 이미지" />
+				</figure>
+				<p>제가 걸어온 길을 소개합니다</p>
 			</section>
 
 			<section class="career">
 				<div class="section-inner">
-					<h2 class="career-title">경력과 프로젝트</h2>
+					
 				</div>
 
 				<article class="experience-band left" data-band>
@@ -257,9 +321,26 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 							entry.target.classList.toggle('in-view', entry.isIntersecting);
 						}
 					},
-					{ threshold: 0.35 }
+					{ threshold: 0.2, rootMargin: '0px 0px -10% 0px' }
 				);
 				for (const band of bands) observer.observe(band);
+			}
+
+			const journey = document.getElementById('journey-break');
+			if (journey) {
+				const updateJourneyShift = () => {
+					const rect = journey.getBoundingClientRect();
+					const view = window.innerHeight;
+					const total = rect.height + view;
+					const passed = Math.min(Math.max(view - rect.top, 0), total);
+					const progress = total > 0 ? passed / total : 0;
+					const shift = -8 + progress * 16;
+					journey.style.setProperty('--journey-shift', `${shift}%`);
+				};
+
+				window.addEventListener('scroll', updateJourneyShift, { passive: true });
+				window.addEventListener('resize', updateJourneyShift);
+				updateJourneyShift();
 			}
 		</script>
 	</body>
