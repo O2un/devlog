@@ -1,49 +1,266 @@
 ---
+import { Image } from 'astro:assets';
 import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
+import companyOneImage from '../assets/bg/bd.jpg';
+import companyTwoImage from '../assets/bg/cn.jpg';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="ko">
 	<head>
 		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+		<style>
+			main {
+				width: 100%;
+				max-width: 100%;
+				padding: 0;
+			}
+			.section-inner {
+				width: 1100px;
+				max-width: calc(100% - 2rem);
+				margin: 0 auto;
+			}
+			.intro {
+				padding: 5rem 0 4rem;
+			}
+			.intro-kicker {
+				margin: 0 0 0.75rem;
+				font-size: 0.95rem;
+				color: rgb(var(--gray));
+				letter-spacing: 0;
+			}
+			.intro h1 {
+				margin-bottom: 1rem;
+				font-size: clamp(2rem, 4vw, 3.4rem);
+			}
+			.intro p {
+				max-width: 760px;
+				margin: 0;
+			}
+			.career {
+				padding-bottom: 5rem;
+			}
+			.career-title {
+				margin: 0 0 1.25rem;
+				font-size: clamp(1.4rem, 2.5vw, 2rem);
+			}
+			.experience-band {
+				position: relative;
+				min-height: 78vh;
+				padding: 4.5rem 0;
+				overflow: hidden;
+				isolation: isolate;
+			}
+			.experience-band + .experience-band {
+				margin-top: 1rem;
+			}
+			.experience-band.left {
+				background: linear-gradient(90deg, rgba(35, 55, 255, 0.1) 0%, rgba(255, 255, 255, 0.96) 48%, #ffffff 100%);
+			}
+			.experience-band.right {
+				background: linear-gradient(270deg, rgba(35, 55, 255, 0.1) 0%, rgba(255, 255, 255, 0.96) 48%, #ffffff 100%);
+			}
+			.experience-media {
+				position: absolute;
+				inset: 0;
+				opacity: 0;
+				transition: transform 600ms ease, opacity 600ms ease;
+				z-index: 0;
+			}
+			.experience-media img {
+				width: 100%;
+				height: 100%;
+				object-fit: cover;
+				border-radius: 0;
+			}
+			.experience-band.left .experience-media {
+				transform: translateX(-8%);
+			}
+			.experience-band.right .experience-media {
+				transform: translateX(8%);
+			}
+			.experience-band.left.in-view .experience-media {
+				transform: translateX(0);
+			}
+			.experience-band.right.in-view .experience-media {
+				transform: translateX(0);
+			}
+			.experience-band.in-view .experience-media {
+				opacity: 1;
+			}
+			.experience-band::before {
+				content: '';
+				position: absolute;
+				inset: 0;
+				z-index: 1;
+				background: linear-gradient(180deg, rgba(0, 0, 0, 0.08) 0%, rgba(0, 0, 0, 0.24) 60%, rgba(0, 0, 0, 0.42) 100%);
+			}
+			.experience-band.left::after,
+			.experience-band.right::after {
+				content: '';
+				position: absolute;
+				inset: 0;
+				z-index: 1;
+				pointer-events: none;
+			}
+			.experience-band.left::after {
+				background: linear-gradient(90deg, rgba(35, 55, 255, 0.16) 0%, rgba(35, 55, 255, 0.06) 34%, rgba(255, 255, 255, 0) 65%);
+			}
+			.experience-band.right::after {
+				background: linear-gradient(270deg, rgba(35, 55, 255, 0.16) 0%, rgba(35, 55, 255, 0.06) 34%, rgba(255, 255, 255, 0) 65%);
+			}
+			.experience-content-wrap {
+				position: relative;
+				z-index: 3;
+				display: flex;
+				min-height: 62vh;
+				align-items: flex-end;
+				padding-bottom: 1.2rem;
+			}
+			.experience-band.left .experience-content-wrap {
+				justify-content: flex-end;
+			}
+			.experience-band.right .experience-content-wrap {
+				justify-content: flex-start;
+			}
+			.experience-content {
+				width: min(500px, 100%);
+				border: 1px solid rgba(255, 255, 255, 0.2);
+				border-radius: 8px;
+				padding: 1.3rem;
+				background: rgba(0, 0, 0, 0.56);
+				backdrop-filter: blur(2px);
+				color: rgba(255, 255, 255, 0.95);
+				opacity: 0;
+				transition: transform 500ms ease, opacity 500ms ease;
+			}
+			.experience-band.left .experience-content {
+				transform: translateX(48px);
+			}
+			.experience-band.right .experience-content {
+				transform: translateX(-48px);
+			}
+			.experience-band.in-view .experience-content {
+				opacity: 1;
+				transform: translateX(0);
+			}
+			.experience-content h3 {
+				font-size: 1.3rem;
+				margin-bottom: 0.45rem;
+			}
+			.experience-content .period {
+				margin: 0 0 1rem;
+				font-size: 0.92rem;
+				color: rgba(255, 255, 255, 0.78);
+			}
+			.experience-content p {
+				margin: 0.4rem 0;
+				font-size: 1rem;
+				line-height: 1.5;
+			}
+			.experience-content h3,
+			.experience-content strong {
+				color: #fff;
+			}
+			.experience-content a {
+				color: #b9c6ff;
+			}
+			.experience-content a:hover {
+				color: #d3dcff;
+			}
+			@media (max-width: 920px) {
+				.experience-band {
+					padding: 2.5rem 0;
+					min-height: auto;
+				}
+				.experience-media {
+					transform: none !important;
+					opacity: 1;
+				}
+				.experience-band::before {
+					background: linear-gradient(180deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.28) 70%, rgba(0, 0, 0, 0.46) 100%);
+				}
+				.experience-content-wrap {
+					min-height: auto;
+					justify-content: stretch !important;
+				}
+				.experience-content {
+					width: 100%;
+					transform: translateY(24px) !important;
+				}
+				.experience-band.in-view .experience-content {
+					transform: translateY(0) !important;
+				}
+			}
+		</style>
 	</head>
 	<body>
 		<Header />
 		<main>
-			<h1>🧑‍🚀 Hello, Astronaut!</h1>
-			<p>
-				Welcome to the official <a href="https://astro.build/">Astro</a> blog starter template. This template
-				serves as a lightweight, minimally-styled starting point for anyone looking to build a personal
-				website, blog, or portfolio with Astro.
-			</p>
-			<p>
-				This template comes with a few integrations already configured in your
-				<code>astro.config.mjs</code> file. You can customize your setup with
-				<a href="https://astro.build/integrations">Astro Integrations</a> to add tools like Tailwind,
-				React, or Vue to your project.
-			</p>
-			<p>Here are a few ideas on how to get started with the template:</p>
-			<ul>
-				<li>Edit this page in <code>src/pages/index.astro</code></li>
-				<li>Edit the site header items in <code>src/components/Header.astro</code></li>
-				<li>Add your name to the footer in <code>src/components/Footer.astro</code></li>
-				<li>Check out the included blog posts in <code>src/content/blog/</code></li>
-				<li>Customize the blog post page layout in <code>src/layouts/BlogPost.astro</code></li>
-			</ul>
-			<p>
-				Have fun! If you get stuck, remember to
-				<a href="https://docs.astro.build/">read the docs</a>
-				or <a href="https://astro.build/chat">join us on Discord</a> to ask questions.
-			</p>
-			<p>
-				Looking for a blog template with a bit more personality? Check out
-				<a href="https://github.com/Charca/astro-blog-template">astro-blog-template</a>
-				by <a href="https://twitter.com/Charca">Maxi Ferreira</a>.
-			</p>
+			<section class="intro section-inner">
+				<p class="intro-kicker">Developer Introduction</p>
+				<h1>문제를 끝까지 해결하는 백엔드 중심 개발자</h1>
+				<p>
+					서비스 안정성과 운영 효율을 우선으로 설계하고, 기능 개발부터 배포/관측까지 책임지고 실행합니다.
+					코드 품질과 협업 속도를 동시에 높이는 개발 방식을 지향합니다.
+				</p>
+			</section>
+
+			<section class="career">
+				<div class="section-inner">
+					<h2 class="career-title">경력과 프로젝트</h2>
+				</div>
+
+				<article class="experience-band left" data-band>
+					<figure class="experience-media">
+						<Image src={companyOneImage} alt="펄어비스 검은사막 온라인 스크린샷" />
+					</figure>
+					<div class="section-inner experience-content-wrap">
+						<div class="experience-content">
+							<h3>펄어비스</h3>
+							<p class="period">2016 - 2022</p>
+							<p><strong>검은사막 온라인</strong>의 전투/PVP 콘텐츠 개발에 참여했습니다.</p>
+							<p>
+								<a href="https://www.playblackdesert.com/" target="_blank" rel="noopener noreferrer">게임 페이지 보기</a>
+							</p>
+						</div>
+					</div>
+				</article>
+
+				<article class="experience-band right" data-band>
+					<figure class="experience-media">
+						<Image src={companyTwoImage} alt="데브시스터즈 쿠키런 더 다키스트 나이트 스크린샷" />
+					</figure>
+					<div class="section-inner experience-content-wrap">
+						<div class="experience-content">
+							<h3>데브시스터즈</h3>
+							<p class="period">2022 - 2024</p>
+							<p><strong>쿠키런: 더 다키스트 나이트</strong> VR 액션 어드벤처 개발에 참여했습니다.</p>
+							<p>
+								<a href="https://www.meta.com/ko-kr/experiences/cookierun-the-darkest-night-chapter1/5240965299324322/" target="_blank" rel="noopener noreferrer">게임 페이지 보기</a>
+							</p>
+						</div>
+					</div>
+				</article>
+			</section>
 		</main>
 		<Footer />
+		<script>
+			const bands = Array.from(document.querySelectorAll('[data-band]'));
+			if (bands.length > 0) {
+				const observer = new IntersectionObserver(
+					(entries) => {
+						for (const entry of entries) {
+							entry.target.classList.toggle('in-view', entry.isIntersecting);
+						}
+					},
+					{ threshold: 0.35 }
+				);
+				for (const band of bands) observer.observe(band);
+			}
+		</script>
 	</body>
 </html>
