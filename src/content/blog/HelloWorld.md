@@ -2,7 +2,7 @@
 title: 'Hello World'
 description: 'Astro 블로그 템플릿으로 시작한 데브로그 기록 시작'
 pubDate: '2026-04-29'
-thumbnail: '../../assets/helloworld.png'
+thumbnail: './Images/helloworld.png'
 ---
 
 # 첫 번째 데브로그

@@ -5,7 +5,7 @@ import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
 import companyOneImage from '../assets/bg/bd.jpg';
 import companyTwoImage from '../assets/bg/cn.jpg';
-import journeyImage from '../assets/bg/abbeyroad.jpg';
+import journeyImage from '../assets/bg/bmo.gif';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 ---
 
@@ -14,23 +14,32 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 	<head>
 		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
 		<style>
+			:global(body) {
+				background: #0b1326;
+				color: #dae2fd;
+			}
+			:global(html),
+			:global(body) {
+				overflow-x: hidden;
+			}
 			main {
 				width: 100%;
 				max-width: 100%;
 				padding: 0;
+				overflow-x: clip;
 			}
 			.section-inner {
-				width: 1100px;
+				width: min(1200px, calc(100% - 2rem));
 				max-width: calc(100% - 2rem);
 				margin: 0 auto;
 			}
 			.intro {
-				padding: 5rem 0 4rem;
+				padding: 5rem 0 4.5rem;
 			}
 			.intro-kicker {
 				margin: 0 0 0.75rem;
 				font-size: 0.95rem;
-				color: rgb(var(--gray));
+				color: #bbcabf;
 				letter-spacing: 0;
 			}
 			.intro h1 {
@@ -41,6 +50,7 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 				max-width: 680px;
 				margin: 0.85rem auto 0;
 				text-align: left;
+				color: #dae2fd;
 			}
 			.intro h3 {
 				max-width: 680px;
@@ -48,6 +58,7 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 				text-align: center;
 				font-size: 2.1rem;
 				white-space: nowrap;
+				color: #4edea3;
 			}
 			.career {
 				padding-top: 2.25rem;
@@ -55,40 +66,45 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 			}
 			.journey-break {
 				position: relative;
-				padding: 4rem 0;
-				text-align: center;
+				display: grid;
+				grid-template-columns: minmax(260px, 0.85fr) minmax(0, 1fr);
+				align-items: center;
+				gap: 3rem;
+				min-height: 220px;
+				padding: 0 max(1rem, calc((100vw - 1200px) / 2));
 				overflow: hidden;
 				isolation: isolate;
 				width: 100%;
+				background: #060e20;
+				border-top: 1px solid #3c4a42;
+				border-bottom: 1px solid #3c4a42;
 			}
 			.journey-media {
-				position: absolute;
-				inset: 0;
-				z-index: 0;
+				justify-self: start;
+				align-self: stretch;
 				overflow: hidden;
+				width: min(460px, 100%);
+				height: 100%;
+				margin: 0;
+				border: 1px solid rgba(78, 222, 163, 0.22);
+				border-radius: 4px;
+				background: #131b2e;
 			}
 			.journey-media img {
-				width: 120%;
+				display: block;
+				width: 100%;
 				height: 100%;
 				object-fit: cover;
 				border-radius: 0;
-				transform: translateX(var(--journey-shift, -8%));
-				transition: transform 80ms linear;
-			}
-			.journey-break::before {
-				content: '';
-				position: absolute;
-				inset: 0;
-				z-index: 1;
-				background: rgba(0, 0, 0, 0.36);
 			}
 			.journey-break p {
 				position: relative;
-				z-index: 2;
+				justify-self: center;
 				margin: 0;
 				font-size: clamp(1.05rem, 2vw, 1.4rem);
 				font-weight: 600;
-				color: #fff;
+				text-align: center;
+				color: #dae2fd;
 			}
 			.career-title {
 				margin: 0 0 1.25rem;
@@ -105,10 +121,10 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 				margin-top: 1rem;
 			}
 			.experience-band.left {
-				background: linear-gradient(90deg, rgba(35, 55, 255, 0.1) 0%, rgba(255, 255, 255, 0.96) 48%, #ffffff 100%);
+				background: linear-gradient(90deg, rgba(16, 185, 129, 0.12) 0%, rgba(11, 19, 38, 0.92) 50%, #0b1326 100%);
 			}
 			.experience-band.right {
-				background: linear-gradient(270deg, rgba(35, 55, 255, 0.1) 0%, rgba(255, 255, 255, 0.96) 48%, #ffffff 100%);
+				background: linear-gradient(270deg, rgba(16, 185, 129, 0.12) 0%, rgba(11, 19, 38, 0.92) 50%, #0b1326 100%);
 			}
 			.experience-media {
 				position: absolute;
@@ -143,7 +159,7 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 				position: absolute;
 				inset: 0;
 				z-index: 1;
-				background: linear-gradient(180deg, rgba(0, 0, 0, 0.08) 0%, rgba(0, 0, 0, 0.24) 60%, rgba(0, 0, 0, 0.42) 100%);
+				background: linear-gradient(180deg, rgba(6, 14, 32, 0.12) 0%, rgba(6, 14, 32, 0.3) 60%, rgba(6, 14, 32, 0.55) 100%);
 			}
 			.experience-band.left::after,
 			.experience-band.right::after {
@@ -154,10 +170,10 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 				pointer-events: none;
 			}
 			.experience-band.left::after {
-				background: linear-gradient(90deg, rgba(35, 55, 255, 0.16) 0%, rgba(35, 55, 255, 0.06) 34%, rgba(255, 255, 255, 0) 65%);
+				background: linear-gradient(90deg, rgba(16, 185, 129, 0.2) 0%, rgba(16, 185, 129, 0.08) 34%, rgba(6, 14, 32, 0) 65%);
 			}
 			.experience-band.right::after {
-				background: linear-gradient(270deg, rgba(35, 55, 255, 0.16) 0%, rgba(35, 55, 255, 0.06) 34%, rgba(255, 255, 255, 0) 65%);
+				background: linear-gradient(270deg, rgba(16, 185, 129, 0.2) 0%, rgba(16, 185, 129, 0.08) 34%, rgba(6, 14, 32, 0) 65%);
 			}
 			.experience-content-wrap {
 				position: relative;
@@ -175,12 +191,12 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 			}
 			.experience-content {
 				width: min(500px, 100%);
-				border: 1px solid rgba(255, 255, 255, 0.2);
-				border-radius: 8px;
-				padding: 1.3rem;
-				background: rgba(0, 0, 0, 0.56);
+				border: 1px solid #3c4a42;
+				border-radius: 4px;
+				padding: 1.5rem;
+				background: rgba(19, 27, 46, 0.74);
 				backdrop-filter: blur(2px);
-				color: rgba(255, 255, 255, 0.95);
+				color: #dae2fd;
 				opacity: 0;
 				transition: transform 500ms ease, opacity 500ms ease;
 			}
@@ -201,7 +217,7 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 			.experience-content .period {
 				margin: 0 0 1rem;
 				font-size: 0.92rem;
-				color: rgba(255, 255, 255, 0.78);
+				color: #bbcabf;
 			}
 			.experience-content p {
 				margin: 0.4rem 0;
@@ -210,20 +226,40 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 			}
 			.experience-content h3,
 			.experience-content strong {
-				color: #fff;
+				color: #4edea3;
 			}
 			.experience-content a {
-				color: #b9c6ff;
+				color: #4cd7f6;
 			}
 			.experience-content a:hover {
-				color: #d3dcff;
+				color: #acedff;
 			}
 			@media (max-width: 920px) {
+				.section-inner {
+					width: 100%;
+					max-width: 100%;
+					padding: 0 1rem;
+					box-sizing: border-box;
+				}
+				.journey-break,
+				.experience-band {
+					width: 100vw;
+					margin-left: calc(50% - 50vw);
+					margin-right: calc(50% - 50vw);
+				}
 				.intro h3 {
 					white-space: normal;
 				}
 				.journey-break {
-					padding: 2rem 0 2.25rem;
+					grid-template-columns: minmax(140px, 44vw) minmax(0, 1fr);
+					gap: 0.75rem;
+					min-height: 180px;
+					padding: 0 1rem 0 0;
+				}
+				.journey-media {
+					width: 100%;
+					height: 100%;
+					border-left: 0;
 				}
 				.experience-band {
 					padding: 2.5rem 0;
@@ -324,23 +360,6 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 					{ threshold: 0.2, rootMargin: '0px 0px -10% 0px' }
 				);
 				for (const band of bands) observer.observe(band);
-			}
-
-			const journey = document.getElementById('journey-break');
-			if (journey) {
-				const updateJourneyShift = () => {
-					const rect = journey.getBoundingClientRect();
-					const view = window.innerHeight;
-					const total = rect.height + view;
-					const passed = Math.min(Math.max(view - rect.top, 0), total);
-					const progress = total > 0 ? passed / total : 0;
-					const shift = -8 + progress * 16;
-					journey.style.setProperty('--journey-shift', `${shift}%`);
-				};
-
-				window.addEventListener('scroll', updateJourneyShift, { passive: true });
-				window.addEventListener('resize', updateJourneyShift);
-				updateJourneyShift();
 			}
 		</script>
 	</body>

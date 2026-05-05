@@ -2,11 +2,11 @@
 title: '[아키텍쳐] SOLID 원칙의 첫번째 S'
 description: 'SOLID 원칙 정리하기'
 pubDate: '2026-05-01'
-thumbnail: '../../assets/broken_S.png'
+thumbnail: './Images/broken_S.png'
 draft: false
 ---
 
-![SOLID S 개념 정리 이미지](../../assets/broken_S.png)
+![SOLID S 개념 정리 이미지](./Images/broken_S.png)
 
 > 객체 지향 프로그래밍에서 단일 책임 원칙(single responsibility principle)이란 모든 클래스는 하나의 책임만 가지며, 클래스는 그 책임을 완전히 캡슐화해야 함을 일컫는다. 클래스가 제공하는 모든 기능은 이 책임과 주의 깊게 부합해야 한다.
 > [위키백과](https://ko.wikipedia.org/wiki/%EB%8B%A8%EC%9D%BC_%EC%B1%85%EC%9E%84_%EC%9B%90%EC%B9%99)
